@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KWOD GAMES</title>
+
+  <!-- Fonts: Lexend for header, Urbanist for body -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Scroll padding for fixed nav */
+    html {
+      scroll-padding-top: 80px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background-color: #fff;
+      color: #000;
+      overflow-x: hidden;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: flex-start;
+      flex: 1;
+    }
+
+    .nav-links a {
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #000;
+      transition: color 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a:hover {
+      color: #A67BFF; /* Light purple hover */
+    }
+
+    .get-in-touch {
+      padding: 0.6rem 1.5rem;
+      background-color: #A67BFF; /* Light purple button */
+      color: #fff;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: background 0.3s ease;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .get-in-touch:hover {
+      background-color: #8B60E0; /* Slightly darker light purple */
+    }
+
+    header {
+      position: relative;
+      height: 90vh; /* smaller banner */
+      background: url('https://static.wixstatic.com/media/bd155e_d13ee60e7ddc4e9b97ba0d739cc90f0a~mv2.jpg/v1/fill/w_2500,h_1213,al_c/bd155e_d13ee60e7ddc4e9b97ba0d739cc90f0a~mv2.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 5rem;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    header .content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      max-width: 90vw;
+    }
+
+    header h1 {
+      font-family: 'Lexend', sans-serif;
+      font-size: 5rem; /* fatter header text */
+      font-weight: 900;
+      color: #A67BFF; /* Light purple */
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+
+    .tagline {
+      font-size: 1.6rem;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    .dynamic-word {
+      color: #A67BFF; /* Light purple */
+      font-weight: 700;
+      opacity: 1;
+      transition: opacity 0.4s ease-in-out;
+      display: inline-block;
+      min-width: 90px;
+    }
+
+    main {
+      padding: 4rem 2rem 6rem;
+      max-width: 1100px;
+      margin: auto;
+      text-align: center;
+    }
+
+    section {
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+      text-align: center;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      font-family: 'Lexend', sans-serif;
+      font-size: 2.5rem;
+      color: #A67BFF; /* Light purple */
+      margin-bottom: 1rem;
+      border-bottom: 3px solid #A67BFF;
+      display: inline-block;
+      padding-bottom: 0.3rem;
+      font-weight: 900;
+    }
+
+    p {
+      max-width: 700px;
+      margin: 1rem auto;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* Updates Section */
+    #updates > div {
+      margin-top: 2rem;
+    }
+
+    #updates .update-image {
+      margin: 1rem auto 2rem;
+      max-width: 400px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(166, 123, 255, 0.3);
+      user-select: none;
+    }
+
+    #updates .update-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 24px;
+    }
+
+    #updates .update-desc {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.15rem;
+      color: #222;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* ----- Slider styles ----- */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      max-width: 600px;
+      margin: 2rem auto 0;
+      text-align: center;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.5s ease;
+      will-change: transform;
+    }
+
+    .game-card {
+      min-width: 100%;
+      background: #f7f7f7;
+      border-radius: 24px; /* fully rounded */
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      user-select: none;
+      pointer-events: auto;
+      text-align: center;
+    }
+
+    .game-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .game-card h3 {
+      padding: 1rem;
+      color: #A67BFF; /* Light purple */
+      font-family: 'Lexend', sans-serif;
+    }
+
+    .game-card p {
+      padding: 0 1rem 1rem;
+      font-family: 'Urbanist', sans-serif;
+      color: #333;
+    }
+
+    /* Slider buttons */
+    .slider-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .slider-buttons button {
+      background-color: #A67BFF; /* Light purple */
+      border: none;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      font-weight: 700;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    .slider-buttons button:hover {
+      background-color: #8B60E0; /* Slightly darker */
+    }
+
+    footer {
+      background: #000;
+      color: #fff;
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      #updates > div {
+        flex-direction: column;
+      }
+      #updates .update-desc {
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 3rem;
+      }
+      .nav-links {
+        gap: 1rem;
+      }
+      .get-in-touch {
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#games">Games</a>
+      <a href="#about">About</a>
+      <a href="#updates">Updates</a>
+      <a href="https://discord.com/" target="_blank" rel="noopener">Discord</a>
+    </div>
+    <a href="#contact" class="get-in-touch">Get In Touch</a>
+  </nav>
+
+  <header id="home">
+    <div class="content">
+      <h1>KWOD GAMES</h1>
+      <p class="tagline">We <span class="dynamic-word">BUILD</span> Games, One KWOD At a Time</p>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" class="reveal">
+      <h2>About Us</h2>
+      <p>KWOD GAMES is a passionate indie studio dedicated to crafting innovative and fun game experiences. From pixel-perfect platformers to mind-bending puzzle games, we strive to push boundaries — one KWOD at a time.</p>
+    </section>
+
+    <section id="updates" class="reveal">
+      <h2>Updates</h2>
+      <div class="update-image">
+        <img src="https://via.placeholder.com/400x250?text=Latest+Update" alt="Latest update image" />
+      </div>
+      <div class="update-desc">
+        <p><strong>Version 2.0 Released!</strong> We’ve added new levels, enhanced graphics, and improved gameplay mechanics to bring you an even better gaming experience. Dive in and enjoy the latest updates tailored to push the fun to the next level!</p>
+      </div>
+    </section>
+
+    <section id="games" class="reveal">
+      <h2>Our Games</h2>
+
+      <div class="slider-container">
+        <div class="slider-track" id="sliderTrack">
+          <div class="game-card">
+            <img src="https://via.placeholder.com/600x300?text=Game+1" alt="Game 1" />
+            <h3>Game Title 1</h3>
+            <p>Short description of Game 1.</p>
+          </div>
+          <div class="game-card">
+            <img src="https://via.placeholder.com/600x300?text=Game+2" alt="Game 2" />
+            <h3>Game Title 2</h3>
+            <p>Short description of Game 2.</p>
+          </div>
+          <div class="game-card">
+            <img src="https://via.placeholder.com/600x300?text=Game+3" alt="Game 3" />
+            <h3>Game Title 3</h3>
+            <p>Short description of Game 3.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-buttons">
+        <button id="prevBtn" aria-label="Previous Game">&larr; Prev</button>
+        <button id="nextBtn" aria-label="Next Game">Next &rarr;</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 KWOD GAMES. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Rotate slogan words with fade
+    const words = ["IMAGINE", "BUILD", "CREATE", "POWER", "PUBLISH"];
+    const wordSpan = document.querySelector(".dynamic-word");
+    let index = 0;
+
+    setInterval(() => {
+      wordSpan.style.opacity = 0;
+      setTimeout(() => {
+        wordSpan.textContent = words[index];
+        wordSpan.style.opacity = 1;
+        index = (index + 1) % words.length;
+      }, 400);
+    }, 2500);
+
+    // Scroll reveal effect
+    const reveals = document.querySelectorAll(".reveal");
+    function handleScroll() {
+      reveals.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          section.classList.add("visible");
+        }
+      });
+    }
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("load", handleScroll);
+
+    // Games slider logic
+    const sliderTrack = document.getElementById("sliderTrack");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let currentIndex = 0;
+    const maxIndex = sliderTrack.children.length - 1;
+
+    function updateSlider() {
+      sliderTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex === 0) ? maxIndex : currentIndex - 1;
+      updateSlider();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex === maxIndex) ? 0 : currentIndex + 1;
+      updateSlider();
+    });
+  </script>
+</body>
+</html>
